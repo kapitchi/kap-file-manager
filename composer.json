@@ -1,0 +1,21 @@
+{
+    "name": "kapitchi/kap-file-manager",
+    "description": "ZF2 Apigility file manager module",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "zf2",
+        "apigility"
+        "file"
+    ],
+    "require": {
+        "zendframework/zendframework": "~2.0"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-0": {
+            "KapFileManager": "src/"
+        }
+    }
+}
