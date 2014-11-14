@@ -10,7 +10,6 @@
     ],
     "require": {
         "zfcampus/zf-apigility": "~1.0",
-        "kapitchi/kap-apigility": "~0.1",
         "league/flysystem": "0.4.*"
     },
     "require-dev": {
