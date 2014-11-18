@@ -2,6 +2,7 @@
 namespace KapFileManager\V1\Rpc\FileThumbnail;
 
 use Intervention\Image\ImageManager;
+use Intervention\Image\Point;
 use KapFileManager\FileRepositoryInterface;
 use KapFileManager\FilesystemManager;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -59,7 +60,7 @@ class FileThumbnailController extends AbstractActionController
         $manager = new ImageManager(array('driver' => 'gd'));
         $image = $manager->make($sourceData);
         
-        //filters
+        //TODO filters
         $image->fit($width, $height);
         
         
@@ -68,7 +69,11 @@ class FileThumbnailController extends AbstractActionController
 
         $outputFilesystem = $this->filesystemManager->get('file_thumbnail');
         $fileName = $filter . '-' . $width . '-' . $height . '/' . $fileId . '.jpg';
-        $outputFilesystem->write($fileName, $newImageData);
+        
+        $outputFilesystem->put($fileName, $newImageData);
+        
+        //had problems with concurrent requests
+        //$outputFilesystem->write($fileName, $newImageData);
         
         echo $image->response('jpg', 80);
         exit;

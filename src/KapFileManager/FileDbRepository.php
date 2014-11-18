@@ -16,15 +16,25 @@ use KapFileManager\FilesystemManager;
 use League\Flysystem\Directory;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemTests;
+use Zend\Db\Sql\Select;
+use Zend\Db\Sql\Where;
 use ZF\MvcAuth\Identity\IdentityInterface;
 
 class FileDbRepository extends DbEntityRepository implements FileRepositoryInterface
 {
-    
-    protected function fetchAll(array $criteria)
+    protected function configurePaginatorSelect(Select $select, array $criteria, array $orderBy)
     {
-        $dbFiles = $this->getPaginatorAdapter($criteria)->getItems(0, 99999)->toArray();//todo get total items
-        return $dbFiles;
+        if(!empty($criteria['mimeFamily'])) {
+            $val = $criteria['mimeFamily'];
+            
+            $select->where(function(Where $where) use ($val) {
+                $where->like('mime_type', $val . '/%');
+            });
+            
+            unset($criteria['mimeFamily']);
+        }
+        
+        parent::configurePaginatorSelect($select, $criteria, $orderBy);
     }
 
     public function createFileEntityFromPath(FilesystemManager $manager, $filesystemName, $path, IdentityInterface $identity = null)
