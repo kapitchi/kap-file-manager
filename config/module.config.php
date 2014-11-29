@@ -149,7 +149,10 @@ return array(
                 0 => 'GET',
                 1 => 'POST',
             ),
-            'collection_query_whitelist' => array('query', 'page_size'),
+            'collection_query_whitelist' => array(
+                0 => 'query',
+                1 => 'page_size',
+            ),
             'page_size' => 25,
             'page_size_param' => 'page_size',
             'entity_class' => 'KapFileManager\\V1\\Rest\\File\\FileEntity',
@@ -244,6 +247,59 @@ If filesystem is specified file/directory is created under root filesystem folde
                 'hydrator_name' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
                 'controller_service_name' => 'KapFileManager\\V1\\Rest\\File\\Controller',
                 'entity_identifier_name' => 'id',
+            ),
+        ),
+    ),
+    'zf-mvc-auth' => array(
+        'authorization' => array(
+            'KapFileManager\\V1\\Rest\\File\\Controller' => array(
+                'entity' => array(
+                    'GET' => false,
+                    'POST' => true,
+                    'PATCH' => true,
+                    'PUT' => true,
+                    'DELETE' => true,
+                ),
+                'collection' => array(
+                    'GET' => false,
+                    'POST' => true,
+                    'PATCH' => false,
+                    'PUT' => false,
+                    'DELETE' => false,
+                ),
+            ),
+            'KapFileManager\\V1\\Rpc\\FilesystemSync\\Controller' => array(
+                'actions' => array(
+                    'filesystemSync' => array(
+                        'GET' => false,
+                        'POST' => true,
+                        'PATCH' => false,
+                        'PUT' => false,
+                        'DELETE' => false,
+                    ),
+                ),
+            ),
+            'KapFileManager\\V1\\Rpc\\FileAccess\\Controller' => array(
+                'actions' => array(
+                    'fileAccess' => array(
+                        'GET' => false,
+                        'POST' => false,
+                        'PATCH' => false,
+                        'PUT' => false,
+                        'DELETE' => false,
+                    ),
+                ),
+            ),
+            'KapFileManager\\V1\\Rpc\\FileThumbnail\\Controller' => array(
+                'actions' => array(
+                    'fileThumbnail' => array(
+                        'GET' => false,
+                        'POST' => false,
+                        'PATCH' => false,
+                        'PUT' => false,
+                        'DELETE' => false,
+                    ),
+                ),
             ),
         ),
     ),
