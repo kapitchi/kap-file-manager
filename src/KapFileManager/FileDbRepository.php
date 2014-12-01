@@ -41,7 +41,7 @@ class FileDbRepository extends DbEntityRepository implements FileRepositoryInter
     {
         $ownerId = null;
         if($identity) {
-            $ownerId = $identity->getAuthenticationIdentity();
+            $ownerId = $identity->getName();
         }
 
         $parent = $this->fetchParentByPath($filesystemName, $path);
@@ -170,7 +170,7 @@ class FileDbRepository extends DbEntityRepository implements FileRepositoryInter
             'parent_id' => null,
             'create_time' => date(DATE_ATOM),
             'type' => 'DIR',
-            'owner_id' => $identity->getAuthenticationIdentity()
+            'owner_id' => $identity->getName()
         ];
 
         return $this->insertAndFetch($data);
